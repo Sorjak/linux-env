@@ -8,3 +8,4 @@ libbz2-dev libreadline-dev libsqlite3-dev curl \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
 pyenv install 3.11
+pyenv global 3.11
