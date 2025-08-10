@@ -1,0 +1,13 @@
+- name: Create vim home dir
+  ansible.builtin.file:
+    path: $HOME/.vim
+    state: directory
+    mode: '0755'
+
+- name: Copy Vim config
+  ansible.builtin.copy:
+    src: ../../.vimrc
+    dest: $HOME/.vim/vimrc
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'

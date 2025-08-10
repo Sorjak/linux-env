@@ -1,0 +1,30 @@
+- name: Main Playbook
+  hosts: all
+  vars:
+    python_version: 3.12.9
+  tasks:
+    - name: Sudo
+      ansible.builtin.include_tasks:
+        file: tasks/sudo.yml
+
+    - name: Initial setup
+      ansible.builtin.include_tasks:
+        file: tasks/initial_setup.yml
+
+    - name: SSH
+      ansible.builtin.include_tasks:
+        file: tasks/ssh.yml
+
+    - name: pyenv
+      ansible.builtin.include_tasks:
+        file: tasks/pyenv.yml
+
+    - name: dotfiles
+      ansible.builtin.include_tasks:
+        file: tasks/install_dotfiles.yml
+
+    - name: vim
+      ansible.builtin.include_tasks:
+        file: tasks/vim.yml
+
+

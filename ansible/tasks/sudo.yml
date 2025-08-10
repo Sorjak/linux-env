@@ -1,0 +1,48 @@
+- name: Update apt-get repo and cache
+  become: true
+  become_method: su
+  become_user: root
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Install Sudo package
+  become: true
+  become_method: su
+  become_user: root
+  apt:
+    pkg:
+      - sudo
+
+
+- name: Make sure we have a 'wheel' group
+  become: true
+  become_method: su
+  become_user: root
+  group:
+    name: wheel
+    state: present
+
+- name: Allow 'sudo' group to have passwordless sudo
+  become: true
+  become_method: su
+  become_user: root
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+
+- name: Ensure group "sudo" exists
+  ansible.builtin.group:
+    name: sudo
+    state: present
+
+- name: Add ansible user to sudo group
+  become: true
+  become_method: su
+  become_user: root
+  user:
+    name={{ ansible_user }}
+    groups=sudo
+    append=yes
+    state=present
+    createhome=no

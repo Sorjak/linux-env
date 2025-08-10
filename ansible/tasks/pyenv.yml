@@ -1,0 +1,36 @@
+- name: Install build environment
+  become: true
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+    pkg:
+      - build-essential
+      - libssl-dev
+      - zlib1g-dev
+      - libbz2-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - curl
+      - libncursesw5-dev
+      - xz-utils
+      - tk-dev
+      - libxml2-dev
+      - libxmlsec1-dev
+      - libffi-dev
+      - liblzma-dev
+
+- name: Download pyenv install script
+  get_url:
+    url: https://pyenv.run
+    dest: /tmp/install_pyenv.sh
+    mode: 0755
+
+- name: Run install script
+  shell: /tmp/install_pyenv.sh
+  args:
+    creates: "$HOME/.pyenv"
+
+- name: Install Python
+  shell: $HOME/.pyenv/bin/pyenv install "{{ python_version }}"
+  args:
+    creates: "$HOME/.pyenv/versions/{{ python_version }}"
