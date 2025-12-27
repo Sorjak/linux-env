@@ -1,15 +1,15 @@
 - name: Overwrite bashrc
   ansible.builtin.copy:
     src: ../../.bashrc
-    dest: $HOME/.bashrc
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    dest: /home/{{ new_user }}/.bashrc
+    owner: "{{ new_user }}"
+    group: "{{ new_user }}"
     mode: '0644'
 
 - name: Copy aliases
   ansible.builtin.copy:
     src: ../../.bash_aliases
-    dest: $HOME/.bash_aliases
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    dest: /home/{{ new_user }}/.bash_aliases
+    owner: "{{ new_user }}"
+    group: "{{ new_user }}"
     mode: '0644'

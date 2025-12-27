@@ -1,0 +1,23 @@
+- name: Create the new user
+  ansible.builtin.user:
+    name: "{{ new_user }}"
+    password: "{{ user_pw | password_hash('sha512') }}"
+    shell: /bin/bash
+    groups: sudo # Adds user to the sudo group for privileges
+    append: true
+    create_home: true
+    state: present
+    update_password: on_create # Only sets password if the user is new
+
+- name: Set up SSH authorized keys (optional but recommended)
+  ansible.posix.authorized_key:
+    user: "{{ new_user }}"
+    state: present
+    # Replace with the actual public key string or use a lookup to a file
+    key: "{{ lookup('file', pubkey_file) }}"
+
+- name: Ensure SSH service is running and enabled (Debian uses systemd)
+  ansible.builtin.systemd:
+    name: ssh
+    state: started
+    enabled: true

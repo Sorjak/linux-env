@@ -1,6 +1,5 @@
 
 - name: Update sshd_config
-  become: true
   blockinfile:
     dest: "/etc/ssh/sshd_config"
     insertafter: "^Include /etc/ssh/sshd_config"
@@ -12,7 +11,6 @@
       MaxAuthTries 3
 
 - name: Restart sshd service
-  become: true
   service:
     name: sshd
     state: restarted

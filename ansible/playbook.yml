@@ -1,15 +1,19 @@
 - name: Main Playbook
   hosts: all
   vars:
-    python_version: 3.12.9
+    python_version: 3.14.2
   tasks:
+    - name: Initial setup
+      ansible.builtin.include_tasks:
+        file: tasks/initial_setup.yml
+
     - name: Sudo
       ansible.builtin.include_tasks:
         file: tasks/sudo.yml
 
-    - name: Initial setup
+    - name: Create user
       ansible.builtin.include_tasks:
-        file: tasks/initial_setup.yml
+        file: tasks/create_user.yml
 
     - name: SSH
       ansible.builtin.include_tasks:
